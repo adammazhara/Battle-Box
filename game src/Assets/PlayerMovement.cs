@@ -14,14 +14,38 @@ public class PlayerMovement : MonoBehaviour
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
+    [SerializeField] private GameObject clonePrefab;
+    private GameObject clone;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private TrailRenderer tr;
+    [SerializeField] private GameObject shieldPrefab;
+    private GameObject shield;
+    private bool shieldActive = false;
+    private float shieldCooldown = 10f;
+    private int shieldCount = 0;
+
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R) && shield == null)
+    {
+        ActivateShield();
+    }
+        if (Input.GetKeyDown(KeyCode.C) && clone == null)
+    {
+        Clone();
+    }
+    if (Input.GetKeyDown(KeyCode.A))
+    {
+        isFacingRight = false;
+    }
+    else if (Input.GetKeyDown(KeyCode.D))
+    {
+        isFacingRight = true;
+    }
         if (isDashing)
         {
             return;
@@ -46,16 +70,46 @@ public class PlayerMovement : MonoBehaviour
 
         Flip();
     }
-
-    private void FixedUpdate()
+    
+    private void Clone()
+{
+    if (clone == null)
     {
-        if (isDashing)
-        {
-            return;
-        }
-
-        rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        Vector3 randomOffset = new Vector3(transform.position.x - 30f, transform.position.y + 1f, transform.position.z);
+        clone = Instantiate(clonePrefab, randomOffset, Quaternion.identity);
+        
+        clone.GetComponent<Rigidbody2D>().velocity = rb.velocity;
     }
+    else
+    {
+        Vector3 randomOffset = new Vector3(transform.position.x - 30f, transform.position.y + 1f, transform.position.z);
+        clone.transform.position = randomOffset;
+        
+        clone.GetComponent<Rigidbody2D>().velocity = rb.velocity;
+    }
+}
+    private void FixedUpdate()
+{
+    if (isDashing)
+    {
+        return;
+    }
+
+    rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+    if (clone != null)
+    {
+        clone.GetComponent<Rigidbody2D>().velocity = rb.velocity;
+    }
+    
+    if (shield != null)
+    {
+        // calculate the offset based on facing direction
+        float offset = isFacingRight ? 1f : -1f;
+
+        // set the position of the shield just in front of the player
+        shield.transform.position = transform.position + new Vector3(offset, 0f, 0f);
+    }
+}
 
     private bool IsGrounded()
     {
@@ -78,6 +132,38 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = localScale;
         }
     }
+    private void ActivateShield()
+{
+    if (!shieldActive && shieldCount < 3)
+    {
+        shieldCount++;
+        
+    
+    if (!shieldActive)
+    {
+        // calculate the offset based on facing direction
+        float offset = isFacingRight ? 1f : -1f;
+
+        // spawn the shield just in front of the player
+        Vector3 spawnPosition = transform.position + new Vector3(offset, 0f, 0f);
+
+        // instantiate the shield
+        shield = Instantiate(shieldPrefab, spawnPosition, Quaternion.Euler(0f, offset > 0f ? 0f : 180f, 0f));
+
+        // set shield active flag to true and start coroutine to disable shield
+        shieldActive = true;
+        StartCoroutine(DisableShield());
+    }
+    }
+}
+private IEnumerator DisableShield()
+{
+    yield return new WaitForSeconds(3f);
+    shieldActive = false;
+    Destroy(shield);
+
+    yield return new WaitForSeconds(shieldCooldown);
+}
 
     private IEnumerator Dash()
     {
