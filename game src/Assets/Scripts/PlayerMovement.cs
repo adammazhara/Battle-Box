@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float speed = 16f;
     private float jumpingPower = 32f;
+    private float jumpAmount = 10f;
     private bool isFacingRight = true;
 
     private bool canDash = true;
@@ -16,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private float dashingCooldown = 1f;
     [SerializeField] private GameObject clonePrefab;
     private GameObject clone;
+    public SpriteRenderer spriteRenderer;
+    private float health = 100f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -59,12 +62,12 @@ public class PlayerMovement : MonoBehaviour
     
     private void Clone() {
         if (clone == null) {
-            Vector3 randomOffset = new Vector3(transform.position.x - 30f, transform.position.y + 1f, transform.position.z);
+            Vector3 randomOffset = new Vector3(transform.position.x - 10f, transform.position.y + 1f, transform.position.z);
             clone = Instantiate(clonePrefab, randomOffset, Quaternion.identity);
             
             clone.GetComponent<Rigidbody2D>().velocity = rb.velocity;
         } else {
-            Vector3 randomOffset = new Vector3(transform.position.x - 30f, transform.position.y + 1f, transform.position.z);
+            Vector3 randomOffset = new Vector3(transform.position.x - 10f, transform.position.y + 1f, transform.position.z);
             clone.transform.position = randomOffset;
             clone.GetComponent<Rigidbody2D>().velocity = rb.velocity;
         }
@@ -145,4 +148,47 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+{
+    // check if the player collided with a spike
+    if (collision.CompareTag("Spike"))
+    {
+        // check if the player is currently invincible due to shield activation
+        if (shieldActive) {
+            return;
+        }
+        
+        // call the TakeDamage function to reduce health
+        TakeDamage(10f);
+
+        // change the color of the sprite renderer to red
+        spriteRenderer.color = Color.red;
+        Invoke("ResetColor", 0.1f);
+    }
+}
+
+
+// add a function to take damage and check if the player is dead
+public void TakeDamage(float amount)
+{
+    health -= amount;
+    if (health <= 0)
+    {
+        Destroy(gameObject);
+    }
+    else
+    {
+        // turn player red temporarily
+        spriteRenderer.color = Color.red;
+        Invoke("ResetColor", 0.5f);
+    }
+}
+
+private void ResetColor()
+{
+    spriteRenderer.color = Color.white;
+}
+
+
+
 }
