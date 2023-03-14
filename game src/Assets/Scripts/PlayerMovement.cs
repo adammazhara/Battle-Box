@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private float horizontal;
     private float speed = 16f;
     private float jumpingPower = 32f;
-    private float jumpAmount = 10f;
+    public HealthBar healthbar;
     private bool isFacingRight = true;
 
     private bool canDash = true;
@@ -30,8 +30,11 @@ public class PlayerMovement : MonoBehaviour
     private float shieldCooldown = 10f;
     private int shieldCount = 0;
 
-
+    void Start(){
+        healthbar.SetHealth((int)health);
+    }
     private void Update() {
+        healthbar.SetHealth((int)health);
         if (Input.GetKeyDown(KeyCode.R) && shield == null)
             ActivateShield();
 
@@ -182,11 +185,16 @@ public void TakeDamage(float amount)
         spriteRenderer.color = Color.red;
         Invoke("ResetColor", 0.5f);
     }
+    healthbar.SetHealth((int)health);
 }
 
 private void ResetColor()
 {
     spriteRenderer.color = Color.white;
+}
+public void Heal(float amount) {
+    health += amount;
+    health = Mathf.Clamp(health, 0f, 100f);
 }
 
 
