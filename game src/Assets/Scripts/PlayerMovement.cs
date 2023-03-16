@@ -1,13 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     private float horizontal;
     private float speed = 16f;
     private float jumpingPower = 32f;
-    public HealthBar healthbar;
+    //public HealthBar healthbar;
     private bool isFacingRight = true;
 
     private bool canDash = true;
@@ -31,10 +32,13 @@ public class PlayerMovement : MonoBehaviour
     private int shieldCount = 0;
 
     void Start(){
-        healthbar.SetHealth((int)health);
+        //healthbar.SetHealth((int)health);
     }
     private void Update() {
-        healthbar.SetHealth((int)health);
+        if(!IsOwner){
+            return;
+        }
+        //healthbar.SetHealth((int)health);
         if (Input.GetKeyDown(KeyCode.R) && shield == null)
             ActivateShield();
 
@@ -59,6 +63,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash());
+
+        if(Input.GetKey(KeyCode.P))
+            TestServerRPC();
+        
 
         Flip();
     }
@@ -185,7 +193,7 @@ public void TakeDamage(float amount)
         spriteRenderer.color = Color.red;
         Invoke("ResetColor", 0.5f);
     }
-    healthbar.SetHealth((int)health);
+    //healthbar.SetHealth((int)health);
 }
 
 private void ResetColor()
@@ -195,6 +203,10 @@ private void ResetColor()
 public void Heal(float amount) {
     health += amount;
     health = Mathf.Clamp(health, 0f, 100f);
+}
+[ServerRpc]
+private void TestServerRPC(){
+    Debug.Log("TestServerRPC " + OwnerClientId);
 }
 
 
