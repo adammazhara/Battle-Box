@@ -65,4 +65,28 @@ public class Lightning : MonoBehaviour
             Destroy(lightningBolts[i]);
         }
     }
+
+    void OnDrawGizmosSelected()
+    {
+        // Draw a circle around the lightning bolt to show its area of effect
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, areaRadius);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if the object that was hit is an enemy
+        if (enemyLayer == (enemyLayer | (1 << collision.gameObject.layer)))
+        {
+            // Apply damage to the enemy
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
+        }
+
+        // Destroy the lightning bolt
+        Destroy(gameObject);
+    }
 }
