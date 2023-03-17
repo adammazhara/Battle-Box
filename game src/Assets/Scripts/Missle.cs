@@ -9,6 +9,10 @@ public class Missle : MonoBehaviour {
     private Transform target;
     private Rigidbody2D body;
     private float lifetime;
+    private float startSequence; // amount of time for the first part of the flight before the missile acquires its target
+    private bool startSequenceBool;
+    private const float ACCELERATION = 1.0f;
+    private const float MAX_SPEED = 30.0f;
 
     // Start is called before the first frame update
     private void Start() {
@@ -22,11 +26,12 @@ public class Missle : MonoBehaviour {
             return;
         }
 
-        Vector2 direction = (Vector2)target.position - body.position;
-        float angle = Vector2.SignedAngle(body.transform.right, direction);
-        float rotation = Mathf.Sign(angle) * Mathf.Min(turnSpeed * Time.fixedDeltaTime, Mathf.Abs(angle));
-        body.transform.Rotate(0, 0, rotation);
-        body.velocity = body.transform.right * speed;
+        Vector2 heading = body.position - (Vector2)target.position;
+        heading.Normalize();
+
+        float value = Vector3.Cross(heading, transform.right).z;
+        body.angularVelocity = turnSpeed * value;
+        body.velocity = transform.right * speed;
 
         lifetime += Time.deltaTime;
         if (lifetime > 5)
