@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class BackButton : MonoBehaviour {
-    public void LoadScene(string scene) {
-        SceneManager.LoadScene(scene);
+public void NextScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }
