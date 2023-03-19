@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : NetworkBehaviour
 {
+    private float defaultGravityScale;
     private float horizontal;
     private float speed = 16f;
     private float jumpingPower = 32f;
@@ -30,9 +31,14 @@ public class PlayerMovement : NetworkBehaviour
     private bool shieldActive = false;
     private float shieldCooldown = 10f;
     private int shieldCount = 0;
+    public GravityWall gravityWall;
+    private float originalGravityScale;
+    public float floatingForce = 10f;
 
     void Start(){
         //healthbar.SetHealth((int)health);
+        defaultGravityScale = rb.gravityScale;
+        originalGravityScale = rb.gravityScale;
     }
     private void Update() {
         if(!IsOwner){
@@ -161,6 +167,13 @@ public class PlayerMovement : NetworkBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
 {
+    if (collision.CompareTag("GravityWall"))
+    {
+        rb.gravityScale = 1f;
+        rb.AddForce(Vector2.up * floatingForce, ForceMode2D.Force);
+    }
+
+
     // check if the player collided with a spike
     if (collision.CompareTag("Spike"))
     {
@@ -177,7 +190,13 @@ public class PlayerMovement : NetworkBehaviour
         Invoke("ResetColor", 0.1f);
     }
 }
-
+void OnTriggerExit2D(Collider2D collision)
+{
+    if (collision.CompareTag("GravityWall"))
+    {
+        rb.gravityScale = originalGravityScale;
+    }
+}
 
 // add a function to take damage and check if the player is dead
 public void TakeDamage(float amount)
