@@ -41,9 +41,7 @@ public class PlayerMovement : NetworkBehaviour
         originalGravityScale = rb.gravityScale;
     }
     private void Update() {
-        if(!IsOwner){
-            return;
-        }
+
         //healthbar.SetHealth((int)health);
         if (Input.GetKeyDown(KeyCode.R) && shield == null)
             ActivateShield();
