@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
 
+
 public class PlayerMovement : NetworkBehaviour
 {
     private float defaultGravityScale;
@@ -11,6 +12,7 @@ public class PlayerMovement : NetworkBehaviour
     private float jumpingPower = 32f;
     //public HealthBar healthbar;
     private bool isFacingRight = true;
+
 
     private bool canDash = true;
     private bool isDashing;
@@ -21,6 +23,7 @@ public class PlayerMovement : NetworkBehaviour
     private GameObject clone;
     public SpriteRenderer spriteRenderer;
     private float health = 100f;
+
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -34,6 +37,12 @@ public class PlayerMovement : NetworkBehaviour
     public GravityWall gravityWall;
     private float originalGravityScale;
     public float floatingForce = 10f;
+    private bool isInvincible = false;
+    private float invincibleTime = 3f;
+    [SerializeField] private GameObject goldAuraPrefab;
+    private GameObject goldAura;
+    private bool goldAuraActive = false;
+
 
     void Start(){
         //healthbar.SetHealth((int)health);
@@ -42,44 +51,62 @@ public class PlayerMovement : NetworkBehaviour
     }
     private void Update() {
 
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+        ActivateGoldAura();
+        }
         //healthbar.SetHealth((int)health);
         if (Input.GetKeyDown(KeyCode.R) && shield == null)
             ActivateShield();
 
+
         if (Input.GetKeyDown(KeyCode.C) && clone == null)
             Clone();
+
 
         if (Input.GetKeyDown(KeyCode.A))
             isFacingRight = false;
 
+
         else if (Input.GetKeyDown(KeyCode.D))
             isFacingRight = true;
 
+
         if (isDashing) return;
 
+
         horizontal = Input.GetAxisRaw("Horizontal");
+
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
 
+
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash());
 
+
         if(Input.GetKey(KeyCode.P))
             TestServerRPC();
-        
+        if (Input.GetKeyDown(KeyCode.L) && !isInvincible) {
+            isInvincible = true;
+            StartCoroutine(ActivateInvisibility());
+    }
+       
+
 
         Flip();
     }
-    
+   
     private void Clone() {
         if (clone == null) {
             Vector3 randomOffset = new Vector3(transform.position.x - 10f, transform.position.y + 1f, transform.position.z);
             clone = Instantiate(clonePrefab, randomOffset, Quaternion.identity);
-            
+           
             clone.GetComponent<Rigidbody2D>().velocity = rb.velocity;
         } else {
             Vector3 randomOffset = new Vector3(transform.position.x - 10f, transform.position.y + 1f, transform.position.z);
@@ -90,29 +117,35 @@ public class PlayerMovement : NetworkBehaviour
     private void FixedUpdate() {
         if (isDashing) return;
 
+
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
         if (clone != null)
             clone.GetComponent<Rigidbody2D>().velocity = rb.velocity;
-        
+       
         if (shield != null){
             // calculate the offset based on facing direction
             float offset = isFacingRight ? 1f : -1f;
+
 
             // set the position of the shield just in front of the player
             shield.transform.position = transform.position + new Vector3(offset, 0f, 0f);
         }
 }
 
+
     private bool IsGrounded() {
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
+
 
     private void Flip() {
         if(Input.GetKey(KeyCode.D))
             transform.rotation = Quaternion.Euler(0f, 0f, 0f);  
 
+
         if(Input.GetKey(KeyCode.A))
             transform.rotation = Quaternion.Euler(0f, 180f, 0f);  
+
 
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f) {
             Vector3 localScale = transform.localScale;
@@ -124,16 +157,19 @@ public class PlayerMovement : NetworkBehaviour
     private void ActivateShield() {
         if (!shieldActive && shieldCount < 3) {
             shieldCount++;
-            
+           
             if (!shieldActive) {
                 // calculate the offset based on facing direction
                 float offset = isFacingRight ? 1f : -1f;
 
+
                 // spawn the shield just in front of the player
                 Vector3 spawnPosition = transform.position + new Vector3(offset, 0f, 0f);
 
+
                 // instantiate the shield
                 shield = Instantiate(shieldPrefab, spawnPosition, Quaternion.Euler(0f, offset > 0f ? 0f : 180f, 0f));
+
 
                 // set shield active flag to true and start coroutine to disable shield
                 shieldActive = true;
@@ -146,8 +182,10 @@ public class PlayerMovement : NetworkBehaviour
         shieldActive = false;
         Destroy(shield);
 
+
         yield return new WaitForSeconds(shieldCooldown);
     }
+
 
     private IEnumerator Dash() {
         canDash = false;
@@ -172,6 +210,8 @@ public class PlayerMovement : NetworkBehaviour
     }
 
 
+
+
     // check if the player collided with a spike
     if (collision.CompareTag("Spike"))
     {
@@ -179,9 +219,10 @@ public class PlayerMovement : NetworkBehaviour
         if (shieldActive) {
             return;
         }
-        
+       
         // call the TakeDamage function to reduce health
         TakeDamage(10f);
+
 
         // change the color of the sprite renderer to red
         spriteRenderer.color = Color.red;
@@ -196,22 +237,31 @@ void OnTriggerExit2D(Collider2D collision)
     }
 }
 
+
 // add a function to take damage and check if the player is dead
 public void TakeDamage(float amount)
 {
-    health -= amount;
-    if (health <= 0)
+    if (goldAuraActive)
     {
-        Destroy(gameObject);
+        Heal(amount);
     }
     else
     {
-        // turn player red temporarily
-        spriteRenderer.color = Color.red;
-        Invoke("ResetColor", 0.5f);
+        health -= amount;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            // turn player red temporarily
+            spriteRenderer.color = Color.red;
+            Invoke("ResetColor", 0.5f);
+        }
     }
     //healthbar.SetHealth((int)health);
 }
+
 
 private void ResetColor()
 {
@@ -227,5 +277,33 @@ private void TestServerRPC(){
 }
 
 
+public float GetJumpingPower()
+{
+    return jumpingPower;
+}
 
+
+private IEnumerator ActivateInvisibility() {
+    spriteRenderer.enabled = false;
+    yield return new WaitForSeconds(invincibleTime);
+    spriteRenderer.enabled = true;
+    isInvincible = false;
+}
+
+private void ActivateGoldAura()
+{
+    if (!goldAuraActive)
+    {
+        goldAura = Instantiate(goldAuraPrefab, transform.position, Quaternion.identity, transform);
+        goldAuraActive = true;
+        StartCoroutine(DeactivateGoldAura());
+    }
+}
+
+private IEnumerator DeactivateGoldAura()
+{
+    yield return new WaitForSeconds(5f); // You can change the duration of the gold aura here
+    goldAuraActive = false;
+    Destroy(goldAura);
+}
 }

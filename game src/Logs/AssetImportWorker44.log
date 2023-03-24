@@ -11,13 +11,13 @@ D:\2021.3.19f1\Editor\Unity.exe
 -name
 AssetImportWorker44
 -projectPath
-D:/mem/Game-Project/game src
+D:/HELLOI/Game-Project/Game-Project/game src
 -logFile
 Logs/AssetImportWorker44.log
 -srvPort
-57182
-Successfully changed project path to: D:/mem/Game-Project/game src
-D:/mem/Game-Project/game src
+49900
+Successfully changed project path to: D:/HELLOI/Game-Project/Game-Project/game src
+D:/HELLOI/Game-Project/Game-Project/game src
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -47,15 +47,15 @@ D:/mem/Game-Project/game src
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [11528] Host "[IP] 192.168.1.24 [Port] 0 [Flags] 2 [Guid] 1532103950 [EditorId] 1532103950 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-MDB38EJ) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [3756] Host "[IP] 192.168.1.24 [Port] 0 [Flags] 2 [Guid] 1057289920 [EditorId] 1057289920 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-MDB38EJ) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [11528] Host "[IP] 192.168.1.24 [Port] 0 [Flags] 2 [Guid] 1532103950 [EditorId] 1532103950 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-MDB38EJ) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [3756] Host "[IP] 192.168.1.24 [Port] 0 [Flags] 2 [Guid] 1057289920 [EditorId] 1057289920 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-MDB38EJ) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 1818.38 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 2611.71 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.19f1 (c9714fde33b6)
 [Subsystems] Discovering subsystems at path D:/2021.3.19f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path D:/mem/Game-Project/game src/Assets
+[Subsystems] Discovering subsystems at path D:/HELLOI/Game-Project/Game-Project/game src/Assets
 GfxDevice: creating device client; threaded=0; jobified=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
@@ -63,12 +63,3 @@ Direct3D:
     Vendor:   NVIDIA
     VRAM:     4019 MB
     Driver:   31.0.15.1694
-Initialize mono
-Mono path[0] = 'D:/2021.3.19f1/Editor/Data/Managed'
-Mono path[1] = 'D:/2021.3.19f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
-Mono config path = 'D:/2021.3.19f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56416
-Begin MonoManager ReloadAssembly
-Registering precompiled unity dll's ...
-Register platform support module: D:/2021.3.19f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.212618 seconds.
