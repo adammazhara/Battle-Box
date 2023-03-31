@@ -7,7 +7,6 @@ public class PlayerEZ : MonoBehaviour
     [SerializeField] private Transform firePoint;
 
     public GameObject player; // Reference the player GameObject in the Inspector
-    private float speed = 16f;
     private bool isFacingRight = true;
 
     [SerializeField] private Rigidbody2D rb;
