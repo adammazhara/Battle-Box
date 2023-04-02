@@ -11,7 +11,7 @@ public class PlayerMovement : NetworkBehaviour
     private float speed = 16f;
     private float jumpingPower = 32f;
     //public HealthBar healthbar;
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
 
 
     private bool canDash = true;
@@ -305,5 +305,24 @@ private IEnumerator DeactivateGoldAura()
     yield return new WaitForSeconds(5f); // You can change the duration of the gold aura here
     goldAuraActive = false;
     Destroy(goldAura);
+}
+public void SlowDownMovement(float slowFactor)
+    {
+        speed = (slowFactor + 3); // reduce player's movement speed by the given slow factor
+        jumpingPower = (slowFactor + 3); // reduce player's jumping power by the given slow factor
+    }
+public void RestoreMovement()
+{
+    speed = 16f;
+    jumpingPower = 32f;
+}
+public void SetVelocity(Vector2 velocity){
+    rb.velocity = velocity;
+}
+public void SetVelocityZero(){
+    rb.velocity = Vector2.zero;
+}
+public Vector2 GetVelocity(){
+    return rb.velocity;
 }
 }

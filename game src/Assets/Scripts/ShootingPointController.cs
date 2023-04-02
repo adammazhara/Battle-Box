@@ -5,9 +5,12 @@ public class ShootingPointController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject acidBallPrefab;
-    [SerializeField] private GameObject iceBallPrefab; // new ice ball prefab variable
+    [SerializeField] private GameObject iceBallPrefab;
+    [SerializeField] private GameObject cobwebPrefab; // new cobweb prefab variable
+    [SerializeField] private GameObject movingWallPrefab; // new moving wall prefab variable
     [SerializeField] private float bulletSpeed = 20f;
     [SerializeField] private float maxAngle = 90f;
+    [SerializeField] private float cobwebDuration = 5f; // new variable for cobweb duration
 
     private void Update()
     {
@@ -19,9 +22,17 @@ public class ShootingPointController : MonoBehaviour
         {
             Shoot(acidBallPrefab);
         }
-        else if (Input.GetKeyDown(KeyCode.E)) // new ice ball key
+        else if (Input.GetKeyDown(KeyCode.E))
         {
             Shoot(iceBallPrefab);
+        }
+        else if (Input.GetKeyDown(KeyCode.J)) // new key for cobweb
+        {
+            Shoot(cobwebPrefab);
+        }
+        else if (Input.GetKeyDown(KeyCode.X)) // new key for moving wall
+        {
+            Shoot(movingWallPrefab); // using the Shoot method to spawn the moving wall
         }
     }
 
@@ -49,11 +60,18 @@ public class ShootingPointController : MonoBehaviour
             playerTransform.localScale = new Vector3(-playerTransform.localScale.x, playerTransform.localScale.y, playerTransform.localScale.z);
         }
 
-        // Instantiate projectile
-        GameObject projectile = Instantiate(projectilePrefab, shootingPointPos, Quaternion.identity);
+        GameObject projectileObject = Instantiate(projectilePrefab, shootingPointPos, Quaternion.identity);
 
-        // Set projectile velocity
-        Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
+        if (projectilePrefab == movingWallPrefab) // if the projectile is the moving wall, set its isFacingRight variable based on the player's direction
+        {
+            MovingWall movingWall = projectileObject.GetComponent<MovingWall>();
+            if (movingWall != null)
+            {
+                movingWall.isFacingRight = playerTransform.localScale.x > 0f;
+            }
+        }
+
+        Rigidbody2D projectileRb = projectileObject.GetComponent<Rigidbody2D>();
         projectileRb.velocity = shootingDir * bulletSpeed;
     }
 }
