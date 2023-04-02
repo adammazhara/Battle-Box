@@ -40,8 +40,8 @@ public class IceBallBullet : MonoBehaviour
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(20f);
-            StartCoroutine(SlowDown(enemy, 0.5f, 3f));
+            enemy.TakeDamage(5f);
+            StartCoroutine(SlowDown(enemy, 0f, 2f));
             StartCoroutine(ChangeColor(enemy, Color.blue, 1f));
             Destroy(gameObject);
         }

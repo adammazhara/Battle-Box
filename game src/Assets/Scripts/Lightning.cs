@@ -5,7 +5,7 @@ public class Lightning : MonoBehaviour
 {
     public GameObject lightningPrefab;
     public LayerMask enemyLayer;
-    public float damage = 10f;
+    public float damage = 15f;
     public float areaRadius = 1f;
 
     void Update()

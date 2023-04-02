@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spike : MonoBehaviour {
-    [SerializeField] public float damageAmount = 10f;
+    [SerializeField] public float damageAmount = 15f;
     [SerializeField] public float jumpAmount = 5f;
 
     private void OnTriggerEnter2D(Collider2D collision) {
