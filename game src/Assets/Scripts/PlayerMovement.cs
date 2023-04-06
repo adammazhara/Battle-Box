@@ -4,8 +4,7 @@ using Unity.Netcode;
 using UnityEngine.InputSystem;
 
 
-public class PlayerMovement : NetworkBehaviour
-{
+public class PlayerMovement : MonoBehaviour {
     private float defaultGravityScale;
     private float horizontal;
     private float speed = 16f;
@@ -44,7 +43,7 @@ public class PlayerMovement : NetworkBehaviour
     private bool goldAuraActive = false;
 
 
-    void Start(){
+    void Start() {
         //healthbar.SetHealth((int)health);
         defaultGravityScale = rb.gravityScale;
         originalGravityScale = rb.gravityScale;
@@ -90,8 +89,8 @@ public class PlayerMovement : NetworkBehaviour
             StartCoroutine(Dash());
 
 
-        if(Input.GetKey(KeyCode.P))
-            TestServerRPC();
+        //if(Input.GetKey(KeyCode.P))
+        //    TestServerRPC();
         if (Input.GetKeyDown(KeyCode.L) && !isInvincible) {
             isInvincible = true;
             StartCoroutine(ActivateInvisibility());
@@ -271,10 +270,10 @@ public void Heal(float amount) {
     health += amount;
     health = Mathf.Clamp(health, 0f, 100f);
 }
-[ServerRpc]
-private void TestServerRPC(){
-    Debug.Log("TestServerRPC " + OwnerClientId);
-}
+//[ServerRpc]
+//private void TestServerRPC(){
+//    Debug.Log("TestServerRPC " + OwnerClientId);
+//}
 
 
 public float GetJumpingPower()

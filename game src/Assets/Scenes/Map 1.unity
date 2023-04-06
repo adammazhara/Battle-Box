@@ -5263,7 +5263,7 @@ GameObject:
   - component: {fileID: 82747154}
   m_Layer: 6
   m_Name: Ground
-  m_TagString: Wall
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10325,6 +10325,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b719a841813fac641afe08309dc386c1, type: 3}
+--- !u!114 &351114725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2696155517823742079, guid: 605c38d7b7025c1468f8ee8547341f13, type: 3}
+  m_PrefabInstance: {fileID: 708067547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2f034432b9fa1d4d8a08564086aaf1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &467316610
 GameObject:
   m_ObjectHideFlags: 0
@@ -15482,6 +15493,10 @@ PrefabInstance:
     - target: {fileID: 2696155517823742078, guid: 605c38d7b7025c1468f8ee8547341f13, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696155517823742078, guid: 605c38d7b7025c1468f8ee8547341f13, type: 3}
+      propertyPath: m_TagString
+      value: GravityWall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 605c38d7b7025c1468f8ee8547341f13, type: 3}
@@ -30512,7 +30527,7 @@ GameObject:
   - component: {fileID: 1302342475}
   - component: {fileID: 1302342474}
   - component: {fileID: 1302342473}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35445,6 +35460,11 @@ PrefabInstance:
 --- !u!4 &1379462122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7915544081293960244, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+  m_PrefabInstance: {fileID: 5770370210921910069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!96 &1379462130 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 7915544081293960241, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
   m_PrefabInstance: {fileID: 5770370210921910069}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1382159054
@@ -55871,7 +55891,7 @@ GameObject:
   - component: {fileID: 1947980698}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56141,13 +56161,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7531271720365119201, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: tr
+      value: 
+      objectReference: {fileID: 1379462130}
+    - target: {fileID: 7531271720365119201, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: gravityWall
+      value: 
+      objectReference: {fileID: 351114725}
+    - target: {fileID: 7531271720365119201, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 82747153}
+    - target: {fileID: 7531271720365119201, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 7915544080412380562, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.034
-      objectReference: {fileID: 0}
-    - target: {fileID: 7915544080472085446, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 4076767976
       objectReference: {fileID: 0}
     - target: {fileID: 7915544081293960244, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
       propertyPath: m_RootOrder
@@ -56194,9 +56226,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: tr
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: clonePrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: gravityWall
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: shieldPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
       propertyPath: goldAuraPrefab
       value: 
-      objectReference: {fileID: 4614476632078243300, guid: d51c2e92035914d499f66aea9a686d4c, type: 3}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915544081293960248, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7915544081293960249, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
       propertyPath: m_Name
       value: Player 1
@@ -56205,6 +56269,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7965550672289852014, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 82747153}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
 --- !u!1001 &6032348355888579088

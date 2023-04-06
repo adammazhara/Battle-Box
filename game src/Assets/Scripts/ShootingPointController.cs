@@ -1,7 +1,7 @@
+using System;
 using UnityEngine;
 
-public class ShootingPointController : MonoBehaviour
-{
+public class ShootingPointController : MonoBehaviour {
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject acidBallPrefab;
@@ -12,27 +12,21 @@ public class ShootingPointController : MonoBehaviour
     [SerializeField] private float maxAngle = 90f;
     [SerializeField] private float cobwebDuration = 5f; // new variable for cobweb duration
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.F)) {
             Shoot(bulletPrefab);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
+        } else if (Input.GetKeyDown(KeyCode.Q)) {
             Shoot(acidBallPrefab);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
+        } else if (Input.GetKeyDown(KeyCode.E)) {
             Shoot(iceBallPrefab);
-        }
-        else if (Input.GetKeyDown(KeyCode.J)) // new key for cobweb
-        {
+        } else if (Input.GetKeyDown(KeyCode.J)) {
             Shoot(cobwebPrefab);
-        }
-        else if (Input.GetKeyDown(KeyCode.X)) // new key for moving wall
-        {
-            Shoot(movingWallPrefab); // using the Shoot method to spawn the moving wall
+        } else if (Input.GetKeyDown(KeyCode.X)) {
+            Shoot(movingWallPrefab);
+        //} else if (Input.GetKeyDown(KeyCode.V)) {
+            //Shoot();
+        } else {
+            return;
         }
     }
 
