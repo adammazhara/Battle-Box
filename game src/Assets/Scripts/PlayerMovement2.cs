@@ -13,8 +13,8 @@ public class PlayerMovement2 : Player {
     private float dashingCooldown = 1f;
 
     private void Update() {
-        if (Input.GetKey(KeyCode.Space) && IsGrounded()) rb.velocity = new Vector2(rb.velocity.x, jumpingPower); 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && IsGrounded()) rb.velocity = new Vector2(rb.velocity.x, jumpingPower); 
+        if ((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.UpArrow)) && rb.velocity.y > 0f) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash) StartCoroutine(Dash());
         Flip();
     }
