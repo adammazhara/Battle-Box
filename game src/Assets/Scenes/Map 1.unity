@@ -4994,9 +4994,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7416526276650512937, guid: cd166fcfae42ce743b072b923db69f4e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7416526276650512937, guid: cd166fcfae42ce743b072b923db69f4e, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9455147
+      objectReference: {fileID: 0}
     - target: {fileID: 8325269185534385776, guid: cd166fcfae42ce743b072b923db69f4e, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: YellowPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325269185534385776, guid: cd166fcfae42ce743b072b923db69f4e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325269185534385776, guid: cd166fcfae42ce743b072b923db69f4e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd166fcfae42ce743b072b923db69f4e, type: 3}
@@ -10277,7 +10293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2479353586236631456, guid: b719a841813fac641afe08309dc386c1, type: 3}
       propertyPath: m_Name
-      value: PlayerEZ
+      value: BluePlayer
       objectReference: {fileID: 0}
     - target: {fileID: 2479353586236631469, guid: b719a841813fac641afe08309dc386c1, type: 3}
       propertyPath: m_RootOrder
