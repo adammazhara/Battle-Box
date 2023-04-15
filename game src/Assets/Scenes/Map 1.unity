@@ -10341,17 +10341,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b719a841813fac641afe08309dc386c1, type: 3}
---- !u!114 &351114725 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2696155517823742079, guid: 605c38d7b7025c1468f8ee8547341f13, type: 3}
-  m_PrefabInstance: {fileID: 708067547}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2f034432b9fa1d4d8a08564086aaf1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &467316610
 GameObject:
   m_ObjectHideFlags: 0
@@ -15514,7 +15503,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: GravityWall
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2696155517823742079, guid: 605c38d7b7025c1468f8ee8547341f13, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 605c38d7b7025c1468f8ee8547341f13, type: 3}
 --- !u!1 &729240818
 GameObject:
@@ -56184,7 +56174,7 @@ PrefabInstance:
     - target: {fileID: 7531271720365119201, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
       propertyPath: gravityWall
       value: 
-      objectReference: {fileID: 351114725}
+      objectReference: {fileID: 0}
     - target: {fileID: 7531271720365119201, guid: c49f62fffe2117143b1681990cf0c608, type: 3}
       propertyPath: groundCheck
       value: 

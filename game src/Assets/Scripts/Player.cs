@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
     private bool goldAuraActive = false;
 
     protected bool shieldActive = false;
+    
     //protected bool IsGrounded;
 
     private void Awake() {
@@ -39,16 +40,19 @@ public class Player : MonoBehaviour {
     }
 
     private void Update() {
-        //if (Input.GetKeyDown(KeyCode.B)) {
-        //    ActivateGoldAura();
-        //}
+        // Check if B is pressed
+        if (Input.GetKeyDown(KeyCode.B)) {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            transform.position = mousePos;
+        }
         //healthbar.SetHealth((int)health);
 
         if (Input.GetKeyDown(KeyCode.L) && !isInvincible) {
             isInvincible = true;
             //StartCoroutine(ActivateInvisibility());
         }
-
+         
     }
 
     public void TakeDamage(float amount) {
@@ -96,4 +100,5 @@ public class Player : MonoBehaviour {
         }
         return false;   
     }
+    
 }

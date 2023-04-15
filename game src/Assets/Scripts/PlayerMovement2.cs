@@ -16,7 +16,10 @@ public class PlayerMovement2 : Player {
         if ((Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow)) && IsGrounded()) rb.velocity = new Vector2(rb.velocity.x, jumpingPower); 
         if ((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.UpArrow)) && rb.velocity.y > 0f) rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash) StartCoroutine(Dash());
+        
+
         Flip();
+        
     }
 
     private void FixedUpdate() {
@@ -73,4 +76,5 @@ public class PlayerMovement2 : Player {
     //        IsGrounded = false;
     //    }
     //}
+    
 }
